@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source Libraries - WattMX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #22c55e;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary);
+        }
+
+        .category-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--primary-glow);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .lib-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .version-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .lib-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .lib-license {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .lib-license svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 6rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Open Source Documentation</h1>
+            <p class="subtitle">WattMX se construye sobre hombros de gigantes. Aquí las librerías de código abierto que hacen posible esta experiencia.</p>
+        </header>
+
+        <!-- UI & Compose -->
+        <section class="category-section">
+            <div class="category-title">UI & Framework</div>
+            <div class="grid">
+                <article class="card stagger-1">
+                    <div class="card-header">
+                        <span class="lib-name">Jetpack Compose</span>
+                        <span class="version-badge">2025.12.01 (BOM)</span>
+                    </div>
+                    <p class="lib-desc">El framework moderno de Android para construir interfaces nativas de forma declarativa y eficiente.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card stagger-2">
+                    <div class="card-header">
+                        <span class="lib-name">Material Design 3</span>
+                        <span class="version-badge">1.4.0</span>
+                    </div>
+                    <p class="lib-desc">Implementación del sistema de diseño más reciente de Google, proporcionando componentes visuales premium.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card stagger-3">
+                    <div class="card-header">
+                        <span class="lib-name">Vico Charts</span>
+                        <span class="version-badge">2.0.0-alpha.28</span>
+                    </div>
+                    <p class="lib-desc">Librería de gráficas potente y flexible diseñada específicamente para Jetpack Compose y vistas de Android.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section class="category-section">
+            <div class="category-title">Arquitectura e Infraestructura</div>
+            <div class="grid">
+                <article class="card stagger-4">
+                    <div class="card-header">
+                        <span class="lib-name">Dagger Hilt</span>
+                        <span class="version-badge">2.57.2</span>
+                    </div>
+                    <p class="lib-desc">Solución estándar para la inyección de dependencias en Android, simplificando la gestión de componentes.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card stagger-5">
+                    <div class="card-header">
+                        <span class="lib-name">Navigation 3</span>
+                        <span class="version-badge">1.0.0-alpha</span>
+                    </div>
+                    <p class="lib-desc">El futuro de la navegación en Android, permitiendo flujos complejos con seguridad de tipos.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <span class="lib-name">WorkManager</span>
+                        <span class="version-badge">2.11.0</span>
+                    </div>
+                    <p class="lib-desc">Gestión inteligente de tareas en segundo plano, garantizando la ejecución incluso si la app se cierra.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Data -->
+        <section class="category-section">
+            <div class="category-title">Persistencia y Datos</div>
+            <div class="grid">
+                <article class="card">
+                    <div class="card-header">
+                        <span class="lib-name">Room Persistence</span>
+                        <span class="version-badge">2.8.4</span>
+                    </div>
+                    <p class="lib-desc">Capa de abstracción sobre SQLite que proporciona acceso robusto a la base de datos con verificación en compilación.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <span class="lib-name">DataStore</span>
+                        <span class="version-badge">1.2.0</span>
+                    </div>
+                    <p class="lib-desc">Solución de almacenamiento de datos moderna y reactiva, sucesora de SharedPreferences.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <span class="lib-name">Kotlin Serialization</span>
+                        <span class="version-badge">1.9.0</span>
+                    </div>
+                    <p class="lib-desc">Serialización de datos multiplataforma de Kotlin, rápida y segura para tipos de datos complejos.</p>
+                    <div class="lib-license">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                        Apache License 2.0
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 WattMX Development Team. Construido con ❤️ y mucho código abierto.</p>
+        </footer>
+    </div>
+</body>
+</html>
