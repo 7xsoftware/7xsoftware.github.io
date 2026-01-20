@@ -18,8 +18,6 @@ export const WattMXVerify = () => {
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         
-        // Obtenemos los valores ya decodificados por el navegador
-        // Esto debe coincidir con el 'estadoCrudo' que firmamos en Android
         const id = params.get('id') || '';
         const st = params.get('st') || ''; 
         const tr = params.get('tr') || '';
@@ -27,7 +25,7 @@ export const WattMXVerify = () => {
         const kw = params.get('kw') || '';
         const mt = params.get('mt') || '';
         const h = params.get('h') || '';
-        const s = params.get('s') || ''; // Firma
+        const s = params.get('s') || ''; 
 
         if (!s || !id) {
             setStatus('invalid');
@@ -35,26 +33,27 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // 1. Reconstruir la cadena idéntica a la que se firmó en Android
-            // El navegador ya decodificó 'Michoac%C3%A1n' a 'Michoacán'
+            // 1. Reconstruir la cadena original
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // 2. Corregir Base64URL a Base64 estándar (añadiendo '=' si falta)
+            // 2. CORRECCIÓN CLAVE: Convertir el string a HEX usando UTF-8 (para que la 'á' coincida con Android)
+            const dataHex = KJUR.crypto.Util.b64tohex(KJUR.crypto.Util.utf8tob64(dataToVerify));
+
+            // 3. Preparar la firma (Base64URL -> Base64 -> Hex)
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
+            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            // 3. Verificar con jsrsasign
+            // 4. Validar
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
-            sig.updateString(dataToVerify);
-            
-            const sigHex = KJUR.crypto.Util.b64tohex(b64);
+            sig.updateHex(dataHex); // Usamos updateHex en lugar de updateString para ser precisos con los bytes
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error("Firma inválida para los datos:", dataToVerify);
+                console.error("Firma inválida. Texto esperado:", dataToVerify);
                 setStatus('invalid');
             }
         } catch (e) {
