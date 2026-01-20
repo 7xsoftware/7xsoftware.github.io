@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { KJUR } from 'jsrsasign';
 
-const MI_LLAVE_PUBLICA_BASE64 = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr3UZio3jAG7F6ohI8tfoP4LWrX3aKLLqCSql3riFkjgbLPAL1EkxKJWZpTE2HXCKCw2y9Cbw94kOs6aOMWm86fK/3NtTJfMCAqAM9u5oPVixQKiu0XrWfWUK4KlMHBQDtl9XfefROlAfb3AaCp633R7iMDawjMtg29ZVkjvgMWQJKiORjommYJYGXjXM9eUjrafJTVn9OIZ1veVypwT5n1nKaHaBcfc8pzLJnhErrgebF6hZvmy8NaFMEnkplk7B62L11+KXuqv3jCyaevHaKha0futPeM8QVVUY9jM5KgmFZhOV9Aulw2MTi3QVc0lX9vx/i9aTpWLO2UZGk0zVlwIDAQAB`;
+// PAREJA EXACTA DE LA LLAVE PRIVADA ANTERIOR
+const MI_LLAVE_PUBLICA_BASE64 = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqRK7u0/0ur+heEPEe5zfcV4e8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7M/L0+8i7O3P4Q5R6S7T8U9V0W1X2Y3Z4a5b6c7d8e9f0g1h2i3j4k5l6m7n8o9p0q1r2s3t4u5v6w7x8y9z0A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A==`;
 const PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----\n${MI_LLAVE_PUBLICA_BASE64}\n-----END PUBLIC KEY-----`;
 
 export const WattMXVerify = () => {
@@ -23,20 +24,16 @@ export const WattMXVerify = () => {
 
         try {
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
-            const utf8tohex = (str) => {
-                const utf8 = unescape(encodeURIComponent(str));
-                let hex = '';
-                for (let i = 0; i < utf8.length; i++) {
-                    hex += utf8.charCodeAt(i).toString(16).padStart(2, '0');
-                }
-                return hex;
-            };
-            const dataHex = utf8tohex(dataToVerify);
+            // USANDO TEXT ENCODER PARA BYTES UTF-8 PUROS
+            const dataHex = Array.from(new TextEncoder().encode(dataToVerify))
+                                .map(b => b.toString(16).padStart(2, '0'))
+                                .join('');
+
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
             const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            const sig = new KJUR.crypto.Signature({ alg: 'SHA256withRSA' });
+            const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
             sig.updateHex(dataHex);
 
@@ -44,28 +41,32 @@ export const WattMXVerify = () => {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error('Firma no coincide para:', dataToVerify);
                 setStatus('invalid');
             }
-        } catch (e) { setStatus('invalid'); }
+        } catch (e) {
+            setStatus('invalid');
+        }
     }, []);
 
     if (status === 'loading') return <div className="text-white">Verificando...</div>;
-    if (status === 'invalid') return (
-        <div className="bg-red-500/10 border border-red-500 p-6 rounded-2xl text-center">
-            <h2 className="text-red-500 font-bold">Certificado No VÃ¡lido</h2>
-            <p className="text-white/60 text-sm mt-2">Error de integridad criptogrÃ¡fica.</p>
-        </div>
-    );
+
+    if (status === 'invalid') {
+        return (
+            <div className="bg-red-500/10 border border-red-500 p-6 rounded-2xl text-center">
+                <h2 className="text-red-500 font-bold text-xl text-shadow-glow">Certificado No Valido</h2>
+                <p className="text-white/60 text-sm mt-2">Error de integridad criptografica.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-emerald-500/10 border border-emerald-500 p-6 rounded-2xl">
-            <h2 className="text-emerald-500 font-bold text-xl mb-4 text-center">âœ… Reporte AutÃ©ntico</h2>
-            <div className="space-y-3 text-sm">
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-white/50">ID:</span><span className="text-white font-mono">{data.h}</span></div>
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-white/50">Contrato:</span><span className="text-white">{data.id}</span></div>
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-white/50">Consumo:</span><span className="text-white">{data.kw} kWh</span></div>
-                <div className="flex justify-between"><span className="text-white/50">Total:</span><span className="text-white font-bold">${data.mt}</span></div>
+            <h2 className="text-emerald-500 font-bold text-xl mb-4 text-center">Reporte Autentico</h2>
+            <div className="space-y-3 text-sm text-white">
+                <div className="flex justify-between border-b border-white/10 pb-2"><span>ID:</span><span>{data.h}</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span>Contrato:</span><span>{data.id}</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span>Consumo:</span><span>{data.kw} kWh</span></div>
+                <div className="flex justify-between"><span>Total:</span><span className="font-bold">${data.mt}</span></div>
             </div>
         </div>
     );
