@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { KJUR } from 'jsrsasign';
 
 const PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyNezVUkIAVwTtxqOiaSP2GpcOmS8KPh6nplWH+8pKfRuJ4au8j4nUrsdBk4281kYW3Za3UB3BHOy4f3XXmvupr/+oqIsp4k/bFqqbZCChnysUHF+wRlehw+eZBsefNnE29sfkc/sbu+09aoGMNl9+QyC5IGmLoxcstU8oCWRxfZdDxrsDCoBXLeY0wwryvTJmR8ULWw+VHcdWJCf/WZKyBxHm6uXntmFs4IF6aRfLV0vy/By6JTK0XehuXt6zcXW1P6IlbZTqbsJq5SldEJ08K2iSXx8O04RiiLO3ylIawc8FqSHYxiF+lY2N9PFXefoZTvcrAiD5jyOo7rslVaYUQIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyNezVUkIAVwTtxqOiaSP
+2GpcOmS8KPh6nplWH+8pKfRuJ4au8j4nUrsdBk4281kYW3Za3UB3BHOy4f3XXmvu
+pr/+oqIsp4k/bFqqbZCChnysUHF+wRlehw+eZBsefNnE29sfkc/sbu+09aoGMNl9
++QyC5IGmLoxcstU8oCWRxfZdDxrsDCoBXLeY0wwryvTJmR8ULWw+VHcdWJCf/WZK
+yBxHm6uXntmFs4IF6aRfLV0vy/By6JTK0XehuXt6zcXW1P6IlbZTqbsJq5SldEJ0
+8K2iSXx8O04RiiLO3ylIawc8FqSHYxiF+lY2N9PFXefoZTvcrAiD5jyOo7rslVaY
+UQIDAQAB
 -----END PUBLIC KEY-----`;
 
 export const WattMXVerify = () => {
@@ -10,22 +16,20 @@ export const WattMXVerify = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        // Usamos regex para obtener los valores RAW de la URL (directamente del query string)
-        // Esto es CRÍTICO porque URLSearchParams decodifica automáticamente (ej: %C3%A1 -> á)
-        // Pero la App firmó el valor codificado.
-        const getRawParam = (name: string) => {
+        // 1. Obtener parámetros RAW (sin decodificar) directamente de la URL
+        const getRaw = (name: string) => {
             const match = window.location.search.match(new RegExp(`[?&]${name}=([^&]*)`));
             return match ? match[1] : '';
         };
 
-        const id = getRawParam('id');
-        const st = getRawParam('st'); // Mantenerlo como %C3%A1
-        const tr = getRawParam('tr');
-        const dt = getRawParam('dt');
-        const kw = getRawParam('kw');
-        const mt = getRawParam('mt');
-        const h = getRawParam('h');
-        const s = getRawParam('s');
+        const id = getRaw('id');
+        const st = getRaw('st'); // Michoac%C3%A1n
+        const tr = getRaw('tr');
+        const dt = getRaw('dt');
+        const kw = getRaw('kw');
+        const mt = getRaw('mt');
+        const h = getRaw('h');
+        const s = getRaw('s');
 
         if (!s || !id) {
             setStatus('invalid');
@@ -33,19 +37,19 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // Reconstruimos la cadena EXACTA que firmó la App (usando valores raw)
+            // 2. Reconstruir cadena idéntica a la que firmó Android
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
+            
+            // 3. Corregir Base64URL a Base64 estándar (añadiendo padding si falta)
+            let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
+            while (b64.length % 4 !== 0) b64 += '=';
 
-            // 1. Convertir Base64URL a Base64 estándar
-            const b64Signature = s.replace(/-/g, '+').replace(/_/g, '/');
-
-            // 2. Usar jsrsasign para verificar (sin depender de Buffer)
+            // 4. Verificar con jsrsasign
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
             sig.updateString(dataToVerify);
-
-            // b64tohex es una utilidad interna de jsrsasign muy confiable en el navegador
-            const sigHex = KJUR.crypto.Util.b64tohex(b64Signature);
+            
+            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
@@ -55,10 +59,11 @@ export const WattMXVerify = () => {
                     tr, kw, mt, h 
                 });
             } else {
+                console.error("Fallo de firma: El hash de los datos no coincide");
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error("Error en validación:", e);
+            console.error("Error criptográfico:", e);
             setStatus('invalid');
         }
     }, []);
