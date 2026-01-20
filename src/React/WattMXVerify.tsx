@@ -108,7 +108,7 @@ export const WattMXVerify = () => {
 
             <div className="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/5">
                 <div className="flex justify-between items-center group">
-                    <span className="text-white/30 text-xs uppercase tracking-wider group-hover:text-white/50 transition-colors">Contrato</span>
+                    <span className="text-white/30 text-xs uppercase tracking-wider group-hover:text-white/50 transition-colors">ID del Periodo</span>
                     <span className="text-white font-mono bg-white/10 px-3 py-1 rounded-lg text-sm">{data.id}</span>
                 </div>
                 <div className="flex justify-between items-center group">
