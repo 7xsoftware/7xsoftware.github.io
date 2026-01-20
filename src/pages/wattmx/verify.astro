@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { WattMXVerify } from '../../React/WattMXVerify';
+---
+
+<Layout title="Verificación WattMX">
+  <div class="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-6 font-sans">
+    <div class="max-w-md w-full">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-white tracking-tight">
+          Watt<span class="text-emerald-500">MX</span>
+          <span class="text-sm font-light text-white/30 ml-2 uppercase tracking-widest">Verify</span>
+        </h1>
+        <p class="text-white/40 text-xs mt-2 uppercase tracking-[0.2em]">Protocolo de Integridad Energética</p>
+      </div>
+      
+      <WattMXVerify client:load />
+      
+      <div class="mt-8 text-center">
+        <a href="/" class="text-white/20 hover:text-emerald-500 transition-colors text-xs uppercase tracking-widest decoration-emerald-500/30 underline-offset-4 underline">
+          Cerrar Verificador
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
