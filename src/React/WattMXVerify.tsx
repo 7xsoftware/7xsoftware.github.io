@@ -11,6 +11,7 @@ export const WattMXVerify = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
+        // Usamos URLSearchParams para obtener los valores decodificados (á, é, etc.)
         const params = new URLSearchParams(window.location.search);
         
         const id = params.get('id') || '';
@@ -28,31 +29,35 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // Reconstruir la cadena original
+            // 1. Reconstruir el mensaje EXACTO (usando los valores decodificados)
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // FORZAR BYTES UTF-8 (Igual que en Android)
-            const dataHex = KJUR.crypto.Util.utf8tohex(dataToVerify);
-
-            // Preparar la firma
+            // 2. Preparar la firma (Añadir padding '=' si falta)
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
-            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            // Validar
+            // 3. Validar con jsrsasign usando codificación UTF-8 explícita
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
+            
+            // Esta función de jsrsasign es la clave para manejar tildes correctamente
+            const dataHex = KJUR.crypto.Util.utf8tohex(dataToVerify);
             sig.updateHex(dataHex);
+            
+            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error("DEBUG - String verificado:", dataToVerify);
+                console.group("Fallo de Validación WattMX");
+                console.log("Mensaje reconstruido:", dataToVerify);
+                console.log("Firma HEX:", sigHex);
+                console.groupEnd();
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error("DEBUG - Error criptográfico:", e);
+            console.error("Error criptográfico:", e);
             setStatus('invalid');
         }
     }, []);
