@@ -36,25 +36,29 @@ export const WattMXVerify = () => {
             // Reconstruimos la cadena EXACTA que firmó la App (usando valores raw)
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
 
+            // 1. Convertir Base64URL a Base64 estándar
+            const b64Signature = s.replace(/-/g, '+').replace(/_/g, '/');
+
+            // 2. Usar jsrsasign para verificar (sin depender de Buffer)
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
             sig.updateString(dataToVerify);
 
-            // Convertir base64url a hex
-            const sigHex = Buffer.from(s.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('hex');
+            // b64tohex es una utilidad interna de jsrsasign muy confiable en el navegador
+            const sigHex = KJUR.crypto.Util.b64tohex(b64Signature);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ 
                     id, 
-                    st: decodeURIComponent(st), // Decodificar solo para mostrar en pantalla
+                    st: decodeURIComponent(st), 
                     tr, kw, mt, h 
                 });
             } else {
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error(e);
+            console.error("Error en validación:", e);
             setStatus('invalid');
         }
     }, []);
