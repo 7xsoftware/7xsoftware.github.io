@@ -16,20 +16,18 @@ export const WattMXVerify = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        // 1. Obtener parámetros RAW (sin decodificar) directamente de la URL
-        const getRaw = (name: string) => {
-            const match = window.location.search.match(new RegExp(`[?&]${name}=([^&]*)`));
-            return match ? match[1] : '';
-        };
-
-        const id = getRaw('id');
-        const st = getRaw('st'); // Michoac%C3%A1n
-        const tr = getRaw('tr');
-        const dt = getRaw('dt');
-        const kw = getRaw('kw');
-        const mt = getRaw('mt');
-        const h = getRaw('h');
-        const s = getRaw('s');
+        const params = new URLSearchParams(window.location.search);
+        
+        // Obtenemos los valores ya decodificados por el navegador
+        // Esto debe coincidir con el 'estadoCrudo' que firmamos en Android
+        const id = params.get('id') || '';
+        const st = params.get('st') || ''; 
+        const tr = params.get('tr') || '';
+        const dt = params.get('dt') || '';
+        const kw = params.get('kw') || '';
+        const mt = params.get('mt') || '';
+        const h = params.get('h') || '';
+        const s = params.get('s') || ''; // Firma
 
         if (!s || !id) {
             setStatus('invalid');
@@ -37,14 +35,15 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // 2. Reconstruir cadena idéntica a la que firmó Android
+            // 1. Reconstruir la cadena idéntica a la que se firmó en Android
+            // El navegador ya decodificó 'Michoac%C3%A1n' a 'Michoacán'
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // 3. Corregir Base64URL a Base64 estándar (añadiendo padding si falta)
+            // 2. Corregir Base64URL a Base64 estándar (añadiendo '=' si falta)
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
 
-            // 4. Verificar con jsrsasign
+            // 3. Verificar con jsrsasign
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
             sig.updateString(dataToVerify);
@@ -53,13 +52,9 @@ export const WattMXVerify = () => {
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
-                setData({ 
-                    id, 
-                    st: decodeURIComponent(st), 
-                    tr, kw, mt, h 
-                });
+                setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error("Fallo de firma: El hash de los datos no coincide");
+                console.error("Firma inválida para los datos:", dataToVerify);
                 setStatus('invalid');
             }
         } catch (e) {
