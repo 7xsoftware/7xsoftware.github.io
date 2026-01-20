@@ -9,6 +9,18 @@ const formatPEM = (base64: string) => {
     return `-----BEGIN PUBLIC KEY-----\n${lines.join('\n')}\n-----END PUBLIC KEY-----`;
 };
 
+// Función de utilidad para convertir Base64 a Hexadecimal (solución al error de librería)
+const b64tohex = (b64: string) => {
+    const bin = atob(b64);
+    let hex = "";
+    for (let i = 0; i < bin.length; i++) {
+        let h = bin.charCodeAt(i).toString(16);
+        if (h.length === 1) h = "0" + h;
+        hex += h;
+    }
+    return hex;
+};
+
 export const WattMXVerify = () => {
     const [status, setStatus] = useState<'loading' | 'valid' | 'invalid'>('loading');
     const [data, setData] = useState<any>(null);
@@ -35,10 +47,10 @@ export const WattMXVerify = () => {
             const dataUint8 = encoder.encode(dataToVerify);
             const dataHex = Array.from(dataUint8).map(b => b.toString(16).padStart(2, '0')).join('');
 
-            // Firma: Base64URL -> Hex
+            // Firma: Base64URL -> Base64 -> Hex
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
-            const sigHex = KJUR.crypto.Util.b64tohex(b64);
+            const sigHex = b64tohex(b64);
 
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(formatPEM(MI_LLAVE_PUBLICA_BASE64));
