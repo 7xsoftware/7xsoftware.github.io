@@ -10,15 +10,22 @@ export const WattMXVerify = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        const st = params.get('st'); 
-        const tr = params.get('tr');
-        const dt = params.get('dt');
-        const kw = params.get('kw');
-        const mt = params.get('mt');
-        const h = params.get('h');
-        const s = params.get('s');
+        // Usamos regex para obtener los valores RAW de la URL (directamente del query string)
+        // Esto es CRÍTICO porque URLSearchParams decodifica automáticamente (ej: %C3%A1 -> á)
+        // Pero la App firmó el valor codificado.
+        const getRawParam = (name: string) => {
+            const match = window.location.search.match(new RegExp(`[?&]${name}=([^&]*)`));
+            return match ? match[1] : '';
+        };
+
+        const id = getRawParam('id');
+        const st = getRawParam('st'); // Mantenerlo como %C3%A1
+        const tr = getRawParam('tr');
+        const dt = getRawParam('dt');
+        const kw = getRawParam('kw');
+        const mt = getRawParam('mt');
+        const h = getRawParam('h');
+        const s = getRawParam('s');
 
         if (!s || !id) {
             setStatus('invalid');
@@ -26,19 +33,28 @@ export const WattMXVerify = () => {
         }
 
         try {
+            // Reconstruimos la cadena EXACTA que firmó la App (usando valores raw)
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
+
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
             sig.updateString(dataToVerify);
+
+            // Convertir base64url a hex
             const sigHex = Buffer.from(s.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('hex');
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
-                setData({ id, st: decodeURIComponent(st || ''), tr, kw, mt, h });
+                setData({ 
+                    id, 
+                    st: decodeURIComponent(st), // Decodificar solo para mostrar en pantalla
+                    tr, kw, mt, h 
+                });
             } else {
                 setStatus('invalid');
             }
         } catch (e) {
+            console.error(e);
             setStatus('invalid');
         }
     }, []);
