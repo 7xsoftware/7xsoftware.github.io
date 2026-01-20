@@ -11,7 +11,6 @@ export const WattMXVerify = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        // Usamos URLSearchParams para obtener los valores decodificados (á, é, etc.)
         const params = new URLSearchParams(window.location.search);
         
         const id = params.get('id') || '';
@@ -29,35 +28,43 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // 1. Reconstruir el mensaje EXACTO (usando los valores decodificados)
+            // 1. Reconstruir el mensaje original
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // 2. Preparar la firma (Añadir padding '=' si falta)
+            // 2. CORRECCIÓN DEFINITIVA: Convertir el string a bytes UTF-8 reales
+            // Esta es la forma más fiable de que la 'á' coincida con Android
+            const utf8tohex = (str: string) => {
+                const utf8 = unescape(encodeURIComponent(str));
+                let hex = "";
+                for (let i = 0; i < utf8.length; i++) {
+                    hex += utf8.charCodeAt(i).toString(16).padStart(2, '0');
+                }
+                return hex;
+            };
+            const dataHex = utf8tohex(dataToVerify);
+
+            // 3. Preparar la firma (Base64URL -> Base64 -> Hex)
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
+            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            // 3. Validar con jsrsasign usando codificación UTF-8 explícita
+            // 4. Validar
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
-            
-            // Esta función de jsrsasign es la clave para manejar tildes correctamente
-            const dataHex = KJUR.crypto.Util.utf8tohex(dataToVerify);
             sig.updateHex(dataHex);
-            
-            const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.group("Fallo de Validación WattMX");
-                console.log("Mensaje reconstruido:", dataToVerify);
-                console.log("Firma HEX:", sigHex);
+                console.group("WattMX Debug");
+                console.log("Data:", dataToVerify);
+                console.log("Hex:", dataHex);
                 console.groupEnd();
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error("Error criptográfico:", e);
+            console.error("Cripto Error:", e);
             setStatus('invalid');
         }
     }, []);
