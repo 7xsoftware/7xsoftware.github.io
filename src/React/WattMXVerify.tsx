@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { KJUR } from 'jsrsasign';
 
-const PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyNezVUkIAVwTtxqOiaSP
-2GpcOmS8KPh6nplWH+8pKfRuJ4au8j4nUrsdBk4281kYW3Za3UB3BHOy4f3XXmvu
-pr/+oqIsp4k/bFqqbZCChnysUHF+wRlehw+eZBsefNnE29sfkc/sbu+09aoGMNl9
-+QyC5IGmLoxcstU8oCWRxfZdDxrsDCoBXLeY0wwryvTJmR8ULWw+VHcdWJCf/WZK
-yBxHm6uXntmFs4IF6aRfLV0vy/By6JTK0XehuXt6zcXW1P6IlbZTqbsJq5SldEJ0
-8K2iSXx8O04RiiLO3ylIawc8FqSHYxiF+lY2N9PFXefoZTvcrAiD5jyOo7rslVaY
-UQIDAQAB
------END PUBLIC KEY-----`;
+// ⚠️ REEMPLAZA ESTA CADENA con la "PUBLIC KEY (Base64)" que generó tu programa KeyGen.java
+const MI_LLAVE_PUBLICA_BASE64 = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyNezVUkIAVwTtxqOiaSP2GpcOmS8KPh6nplWH+8pKfRuJ4au8j4nUrsdBk4281kYW3Za3UB3BHOy4f3XXmvupr/+oqIsp4k/bFqqbZCChnysUHF+wRlehw+eZBsefNnE29sfkc/sbu+09aoGMNl9+QyC5IGmLoxcstU8oCWRxfZdDxrsDCoBXLeY0wwryvTJmR8ULWw+VHcdWJCf/WZKyBxHm6uXntmFs4IF6aRfLV0vy/By6JTK0XehuXt6zcXW1P6IlbZTqbsJq5SldEJ08K2iSXx8O04RiiLO3ylIawc8FqSHYxiF+lY2N9PFXefoZTvcrAiD5jyOo7rslVaYUQIDAQAB`;
+
+const PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----\n${MI_LLAVE_PUBLICA_BASE64}\n-----END PUBLIC KEY-----`;
 
 export const WattMXVerify = () => {
     const [status, setStatus] = useState<'loading' | 'valid' | 'invalid'>('loading');
@@ -33,31 +28,28 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // 1. Reconstruir la cadena original
+            // 1. Reconstruir la cadena original (idéntica a Android)
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // 2. CORRECCIÓN CLAVE: Convertir el string a HEX usando UTF-8 (para que la 'á' coincida con Android)
-            const dataHex = KJUR.crypto.Util.b64tohex(KJUR.crypto.Util.utf8tob64(dataToVerify));
-
-            // 3. Preparar la firma (Base64URL -> Base64 -> Hex)
+            // 2. Preparar la firma (Base64URL -> Base64 -> Hex)
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
             const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            // 4. Validar
+            // 3. Validar usando UTF-8 explícito
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
-            sig.updateHex(dataHex); // Usamos updateHex en lugar de updateString para ser precisos con los bytes
+            sig.updateString(dataToVerify);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error("Firma inválida. Texto esperado:", dataToVerify);
+                console.error("Mismatched Signature. Data string was:", dataToVerify);
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error("Error criptográfico:", e);
+            console.error("Cripto Error:", e);
             setStatus('invalid');
         }
     }, []);
