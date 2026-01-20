@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { KJUR } from 'jsrsasign';
 
-// ⚠️ REEMPLAZA ESTA CADENA con la "PUBLIC KEY (Base64)" que generó tu programa KeyGen.java
+// LLAVE PÚBLICA SINCRONIZADA
 const MI_LLAVE_PUBLICA_BASE64 = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvfkzb1nwxndsQhYNiQdC8USednbLK6IXOSZ5Ylc858yX86wjH6zCEsk23scTi8wk9fg2yNHbRIunWKLgRVkBLu8Lo4RgEc5Q0JWm37v5Q2nDpP+/1Jol8rytuyQKqhbvClajUT9uV80B0Qd0iM3zqqw7GKuQh7aDswOUCYv5EQ/9y1o16QpymsG+3CtJcvtSjfw48Xz2dgkOmU+PXb7MtD4+yamE+O12gVuZmzs5Wi9VJkELiOtq3ZPYytzyOiIh+tR98NWvb249Mg2a6qHSidmjgJ4zXRsX9LxDKh1tKtUORPq1igtVhrsDh+T2uEbFF1jU21PRRum0NxqMMSBNRwIDAQAB`;
 
 const PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----\n${MI_LLAVE_PUBLICA_BASE64}\n-----END PUBLIC KEY-----`;
@@ -28,28 +28,31 @@ export const WattMXVerify = () => {
         }
 
         try {
-            // 1. Reconstruir la cadena original (idéntica a Android)
+            // Reconstruir la cadena original
             const dataToVerify = `${id}|${st}|${tr}|${dt}|${kw}|${mt}`;
             
-            // 2. Preparar la firma (Base64URL -> Base64 -> Hex)
+            // FORZAR BYTES UTF-8 (Igual que en Android)
+            const dataHex = KJUR.crypto.Util.utf8tohex(dataToVerify);
+
+            // Preparar la firma
             let b64 = s.replace(/-/g, '+').replace(/_/g, '/');
             while (b64.length % 4 !== 0) b64 += '=';
             const sigHex = KJUR.crypto.Util.b64tohex(b64);
 
-            // 3. Validar usando UTF-8 explícito
+            // Validar
             const sig = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
             sig.init(PUBLIC_KEY_PEM);
-            sig.updateString(dataToVerify);
+            sig.updateHex(dataHex);
 
             if (sig.verify(sigHex)) {
                 setStatus('valid');
                 setData({ id, st, tr, kw, mt, h });
             } else {
-                console.error("Mismatched Signature. Data string was:", dataToVerify);
+                console.error("DEBUG - String verificado:", dataToVerify);
                 setStatus('invalid');
             }
         } catch (e) {
-            console.error("Cripto Error:", e);
+            console.error("DEBUG - Error criptográfico:", e);
             setStatus('invalid');
         }
     }, []);
