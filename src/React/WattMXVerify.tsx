@@ -125,6 +125,23 @@ export const WattMXVerify = () => {
                 </div>
             </div>
 
+            <div className="mt-6 bg-white/5 border border-white/5 rounded-2xl p-4 animate-in fade-in slide-in-from-top-2 duration-700 delay-300">
+                <p className="text-[10px] text-white/40 uppercase tracking-widest mb-3 text-center">📈 Inteligencia Energética</p>
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-xl text-center">
+                        <p className="text-[9px] text-emerald-500/60 uppercase font-bold">Meta -10%</p>
+                        <p className="text-white text-lg font-black">${(parseFloat(data.mt) * 0.9).toFixed(2)}</p>
+                        <p className="text-[8px] text-white/30 italic">Costo Proyectado</p>
+                    </div>
+                    <div className="bg-blue-500/5 border border-blue-500/10 p-3 rounded-xl text-center">
+                        <p className="text-[9px] text-blue-500/60 uppercase font-bold">Ahorro Est.</p>
+                        <p className="text-white text-lg font-black">${(parseFloat(data.mt) * 0.1).toFixed(2)}*</p>
+                        <p className="text-[8px] text-white/30 italic">Reducción Directa</p>
+                    </div>
+                </div>
+                <p className="text-[8px] text-white/20 mt-3 text-center">* Estimación basada en comportamiento lineal de consumo.</p>
+            </div>
+
             <div className="mt-8 flex flex-col items-center gap-2 opacity-30 hover:opacity-100 transition-opacity duration-500">
                 <p className="text-[9px] text-white uppercase tracking-[0.4em]">ID Registro</p>
                 <div className="flex items-center gap-2">
