@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad | WattMX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FFD700;
+            --primary-dark: #ccac00;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .last-updated {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 300;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-main);
+            font-weight: 300;
+        }
+
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            .content-card {
+                padding: 1.5rem;
+            }
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">WattMX</div>
+            <h1>Política de Privacidad</h1>
+            <p class="last-updated">Última actualización: 22 de enero de 2026</p>
+        </header>
+
+        <main class="content-card">
+            <section>
+                <h2>Información General</h2>
+                <p>En <span class="highlight">WattMX</span>, operada por 7xSoftware, nos tomamos muy en serio tu privacidad. Esta aplicación es una herramienta de utilidad diseñada para ayudarte a gestionar y simular el consumo de energía eléctrica.</p>
+            </section>
+
+            <section>
+                <h2>Recolección de Datos</h2>
+                <p>Declaramos de forma transparente el uso de los siguientes datos:</p>
+                <ul>
+                    <li><span class="highlight">Información Personal:</span> Recopilamos tu nombre y correo electrónico únicamente si decides crear una cuenta para utilizar las funciones de Sincronización en la Nube (Cloud Sync). Estos datos son necesarios para identificar tu perfil y proteger tu información.</li>
+                    <li><span class="highlight">Identificadores de Dispositivo:</span> Podemos recopilar IDs de dispositivo para fines de análisis de fallos (Crashlytics) y telemetría anónima, con el fin de mejorar la estabilidad de la app.</li>
+                    <li><span class="highlight">Datos de Consumo:</span> Las lecturas de medidor y datos de facturación que ingresas se almacenan localmente y, si está activado, en servidores seguros para su sincronización cruzada.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Seguridad de los Datos</h2>
+                <p>Implementamos medidas de seguridad de grado industrial:</p>
+                <ul>
+                    <li><span class="highlight">Cifrado en Tránsito:</span> Todos los datos transmitidos entre tu dispositivo y nuestros servidores (como Firebase) se realizan bajo protocolos seguros HTTPS/TLS.</li>
+                    <li><span class="highlight">Cifrado en Reposo:</span> Los datos almacenados en la nube están protegidos mediante los estándares de seguridad de Google Cloud Platform.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Anuncios y Servicios de Terceros</h2>
+                <p>Nuestra aplicación muestra anuncios para sustentar la versión gratuita. Estos servicios pueden utilizar identificadores anónimos para ofrecer anuncios relevantes. Trabajamos con:</p>
+                <ul>
+                    <li>Google AdMob (Publicidad)</li>
+                    <li>Firebase (Analíticas y Sincronización)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Control del Usuario</h2>
+                <p>Tienes en todo momento el derecho de:</p>
+                <ul>
+                    <li>Eliminar tu cuenta y todos los datos asociados desde los ajustes de la aplicación.</li>
+                    <li>Exportar una copia de tus datos locales en formato JSON o CSV.</li>
+                    <li>Revocar permisos de cámara o notificaciones en cualquier momento.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Contacto</h2>
+                <p>Si tienes dudas sobre esta política, puedes contactarnos en: <span class="highlight">7xsoftw@gmail.com</span></p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 7xSoftware. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
