@@ -113,6 +113,12 @@
             gap: 2rem;
         }
 
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -124,6 +130,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .card:hover {
@@ -262,65 +269,73 @@
         <section class="category-section">
             <div class="category-title">Interfaces & Componentes</div>
             <div class="grid">
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Jetpack Compose</span>
-                        <span class="version-badge">2025.12.01</span>
-                    </div>
-                    <p class="lib-desc">El motor moderno de Android para construir interfaces declarativas con un enfoque premium y animaciones fluidas.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://developer.android.com/jetpack/compose" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Jetpack Compose</span>
+                            <span class="version-badge">2025.12.01</span>
                         </div>
-                        <span class="lib-tag">Core UI</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">El motor moderno de Android para construir interfaces declarativas con un enfoque premium y animaciones fluidas.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Core UI</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Material Design 3</span>
-                        <span class="version-badge">1.4.0</span>
-                    </div>
-                    <p class="lib-desc">Implementación del sistema "You" de Google, permitiendo personalización dinámica de colores y tipografía adaptativa.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://m3.material.io/" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Material Design 3</span>
+                            <span class="version-badge">1.4.0</span>
                         </div>
-                        <span class="lib-tag">Design System</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Implementación del sistema "You" de Google, permitiendo personalización dinámica de colores y tipografía adaptativa.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Design System</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Vico Charts</span>
-                        <span class="version-badge">2.0.0-alpha.28</span>
-                    </div>
-                    <p class="lib-desc">Visualización de datos avanzada. Permite la representación precisa y estética del consumo energético histórico.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://github.com/patrykandpatrick/vico" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Vico Charts</span>
+                            <span class="version-badge">2.0.0-alpha.28</span>
                         </div>
-                        <span class="lib-tag">Data Viz</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Visualización de datos avanzada. Permite la representación precisa y estética del consumo energético histórico.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Data Viz</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Material Icons</span>
-                        <span class="version-badge">1.7.8</span>
-                    </div>
-                    <p class="lib-desc">Set extendido de iconografía estilizada para una navegación intuitiva y visualmente consistente.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://fonts.google.com/icons" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Material Icons</span>
+                            <span class="version-badge">1.7.8</span>
                         </div>
-                        <span class="lib-tag">Assets</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Set extendido de iconografía estilizada para una navegación intuitiva y visualmente consistente.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Assets</span>
+                        </div>
+                    </article>
+                </a>
             </div>
         </section>
 
@@ -328,65 +343,73 @@
         <section class="category-section">
             <div class="category-title">Arquitectura & Cloud</div>
             <div class="grid">
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Dagger Hilt</span>
-                        <span class="version-badge">2.57.2</span>
-                    </div>
-                    <p class="lib-desc">Inyección de dependencias robusta para una arquitectura limpia, modular y altamente testeable.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://dagger.dev/hilt/" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Dagger Hilt</span>
+                            <span class="version-badge">2.57.2</span>
                         </div>
-                        <span class="lib-tag">Architecture</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Inyección de dependencias robusta para una arquitectura limpia, modular y altamente testeable.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Architecture</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Google Firebase</span>
-                        <span class="version-badge">34.8.0</span>
-                    </div>
-                    <p class="lib-desc">Infraestructura para Cloud Sync, Auth y Firestore. Garantiza que tus datos vivan seguros en la nube.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Google Term
+                <a href="https://firebase.google.com/docs" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Google Firebase</span>
+                            <span class="version-badge">34.8.0</span>
                         </div>
-                        <span class="lib-tag">Cloud Backend</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Infraestructura para Cloud Sync, Auth y Firestore. Garantiza que tus datos vivan seguros en la nube.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Google Term
+                            </div>
+                            <span class="lib-tag">Cloud Backend</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Navigation 3</span>
-                        <span class="version-badge">1.0.0</span>
-                    </div>
-                    <p class="lib-desc">Gestión de estados de navegación con seguridad de tipos para una experiencia de usuario sin fricciones.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://developer.android.com/guide/navigation" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Navigation 3</span>
+                            <span class="version-badge">1.0.0</span>
                         </div>
-                        <span class="lib-tag">App Flow</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Gestión de estados de navegación con seguridad de tipos para una experiencia de usuario sin fricciones.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">App Flow</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">WorkManager</span>
-                        <span class="version-badge">2.11.0</span>
-                    </div>
-                    <p class="lib-desc">Ejecución confiable de tareas como sincronización de fondo y recordatorios de facturación.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://developer.android.com/topic/libraries/architecture/workmanager" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">WorkManager</span>
+                            <span class="version-badge">2.11.0</span>
                         </div>
-                        <span class="lib-tag">Background Tasks</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Ejecución confiable de tareas como sincronización de fondo y recordatorios de facturación.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Background Tasks</span>
+                        </div>
+                    </article>
+                </a>
             </div>
         </section>
 
@@ -394,50 +417,56 @@
         <section class="category-section">
             <div class="category-title">Persistencia & Formatos</div>
             <div class="grid">
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Room DB</span>
-                        <span class="version-badge">2.8.4</span>
-                    </div>
-                    <p class="lib-desc">Persistencia SQLite de alto rendimiento con validación estática para todos los registros locales.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://developer.android.com/training/data-storage/room" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Room DB</span>
+                            <span class="version-badge">2.8.4</span>
                         </div>
-                        <span class="lib-tag">Local Database</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Persistencia SQLite de alto rendimiento con validación estática para todos los registros locales.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Local Database</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">DataStore</span>
-                        <span class="version-badge">1.2.0</span>
-                    </div>
-                    <p class="lib-desc">Gestión reactiva de preferencias de usuario y configuración de estado global de la aplicación.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://developer.android.com/topic/libraries/architecture/datastore" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">DataStore</span>
+                            <span class="version-badge">1.2.0</span>
                         </div>
-                        <span class="lib-tag">Preferences</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Gestión reactiva de preferencias de usuario y configuración de estado global de la aplicación.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Preferences</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Serialization</span>
-                        <span class="version-badge">1.9.0</span>
-                    </div>
-                    <p class="lib-desc">Transformación eficiente de objetos a formatos intercambiables como JSON para backups y sync.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://github.com/Kotlin/kotlinx.serialization" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Serialization</span>
+                            <span class="version-badge">1.9.0</span>
                         </div>
-                        <span class="lib-tag">Data Engine</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Transformación eficiente de objetos a formatos intercambiables como JSON para backups y sync.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">Data Engine</span>
+                        </div>
+                    </article>
+                </a>
             </div>
         </section>
 
@@ -445,50 +474,56 @@
         <section class="category-section">
             <div class="category-title">Servicios & Utilidades</div>
             <div class="grid">
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">Billing Library</span>
-                        <span class="version-badge">7.1.1</span>
-                    </div>
-                    <p class="lib-desc">Procesamiento seguro de suscripciones Pro y facturación a través de Google Play Store.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Google Term
+                <a href="https://developer.android.com/google/play/billing" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">Billing Library</span>
+                            <span class="version-badge">7.1.1</span>
                         </div>
-                        <span class="lib-tag">In-App Purchase</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Procesamiento seguro de suscripciones Pro y facturación a través de Google Play Store.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Google Term
+                            </div>
+                            <span class="lib-tag">In-App Purchase</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">ZXing Core</span>
-                        <span class="version-badge">3.5.3</span>
-                    </div>
-                    <p class="lib-desc">Motor para la generación de códigos QR que permiten identificar medidores físicos rápidamente.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Apache 2.0
+                <a href="https://github.com/zxing/zxing" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">ZXing Core</span>
+                            <span class="version-badge">3.5.3</span>
                         </div>
-                        <span class="lib-tag">QR Engine</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Motor para la generación de códigos QR que permiten identificar medidores físicos rápidamente.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Apache 2.0
+                            </div>
+                            <span class="lib-tag">QR Engine</span>
+                        </div>
+                    </article>
+                </a>
 
-                <article class="card">
-                    <div class="card-header">
-                        <span class="lib-name">AdMob Ads</span>
-                        <span class="version-badge">23.6.0</span>
-                    </div>
-                    <p class="lib-desc">Gestión de publicidad no intrusiva para mantener la sostenibilidad de la versión gratuita.</p>
-                    <div class="lib-footer">
-                        <div class="lib-license">
-                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            Google Term
+                <a href="https://developers.google.com/admob" target="_blank" class="card-link">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="lib-name">AdMob Ads</span>
+                            <span class="version-badge">23.6.0</span>
                         </div>
-                        <span class="lib-tag">Ad Services</span>
-                    </div>
-                </article>
+                        <p class="lib-desc">Gestión de publicidad no intrusiva para mantener la sostenibilidad de la versión gratuita.</p>
+                        <div class="lib-footer">
+                            <div class="lib-license">
+                                <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                Google Term
+                            </div>
+                            <span class="lib-tag">Ad Services</span>
+                        </div>
+                    </article>
+                </a>
             </div>
         </section>
 
