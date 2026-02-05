@@ -25,6 +25,24 @@ const skillsData: SkillCategory[] = [
     ],
   },
   {
+    title: "Desarrollo para Windows",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-6 h-6 text-[var(--sec)] opacity-70"
+      >
+        <path d="M3 5.54545L10.5 4.5V11.5H3V5.54545ZM11.5 4.36364L21 3V11.5H11.5V4.36364ZM3 18.4545L10.5 19.5V12.5H3V18.4545ZM11.5 19.6364L21 21V12.5H11.5V19.6364Z"></path>
+      </svg>
+    ),
+    items: [
+      "Software de escritorio robusto con C#",
+      "Automatización de procesos en Windows",
+      "Integración de APIs y bases de datos",
+    ],
+  },
+  {
     title: "Diseño UI/UX y Prototipado",
     icon: (
       <svg
