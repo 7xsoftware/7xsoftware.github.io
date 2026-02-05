@@ -20,34 +20,36 @@
           id="contact-form"
           action="https://formspree.io/f/xeeanzlp"
           method="POST"
-          class="flex flex-col gap-4"
+          class="flex flex-col gap-5"
         >
-          <input
-            type="text"
-            name="from_name"
-            placeholder="Name"
-            required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
-          />
-          <input
-            type="email"
-            name="reply_to"
-            placeholder="Email"
-            required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
-          />
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="from_name"
+              placeholder="Nombre"
+              required
+              class="px-5 py-3 bg-[#1a1a1a] text-[var(--white)] border border-white/5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--sec)] focus:border-transparent transition-all"
+            />
+            <input
+              type="email"
+              name="reply_to"
+              placeholder="Email"
+              required
+              class="px-5 py-3 bg-[#1a1a1a] text-[var(--white)] border border-white/5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--sec)] focus:border-transparent transition-all"
+            />
+          </div>
           <textarea
             name="message"
-            placeholder="Message"
-            rows="6"
+            placeholder="Mensaje"
+            rows="5"
             required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)] resize-none"
+            class="px-5 py-3 bg-[#1a1a1a] text-[var(--white)] border border-white/5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--sec)] focus:border-transparent transition-all resize-none"
           ></textarea>
           <button
             type="submit"
-            class="px-4 py-2 bg-[var(--white-icon-tr)] text-[var(--white)] rounded-lg opacity-60 transition-opacity border border-[var(--white-icon-tr)] hover:opacity-100 hover:bg-[var(--white-icon-tr)]"
+            class="px-6 py-4 bg-[var(--sec)] text-white font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(164,118,255,0.2)]"
           >
-            Submit
+            Enviar Mensaje
           </button>
         </form>
         <div
